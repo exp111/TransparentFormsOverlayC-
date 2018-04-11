@@ -1,4 +1,7 @@
-﻿namespace TransparentOverlay
+﻿using System;
+using System.Windows.Forms;
+
+namespace TransparentOverlay
 {
 	partial class Form1
 	{
@@ -20,21 +23,41 @@
 			base.Dispose(disposing);
 		}
 
-		#region Vom Windows Form-Designer generierter Code
-
 		/// <summary>
 		/// Erforderliche Methode für die Designerunterstützung.
 		/// Der Inhalt der Methode darf nicht mit dem Code-Editor geändert werden.
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.components = new System.ComponentModel.Container();
+			this.label1 = new System.Windows.Forms.Label();
+			this.SuspendLayout();
+			// 
+			// label1
+			// 
+			this.label1.AutoSize = true;
+			this.label1.Location = new System.Drawing.Point(265, 78);
+			this.label1.Name = "label1";
+			this.label1.Size = new System.Drawing.Size(35, 13);
+			this.label1.TabIndex = 0;
+			this.label1.Text = "Test";
+			// 
+			// Form1
+			// 
+			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(800, 450);
+			this.BackColor = System.Drawing.SystemColors.Control;
+			this.ClientSize = new System.Drawing.Size(585, 254);
+			this.Controls.Add(this.label1);
+			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+			this.Name = "Form1";
 			this.Text = "Form1";
+			this.TransparencyKey = System.Drawing.Color.Transparent;
+			this.ResumeLayout(false);
+			this.PerformLayout();
+
 		}
 
-		#endregion
+		private Label label1;
 	}
 }
 
