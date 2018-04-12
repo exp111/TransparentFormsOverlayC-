@@ -77,17 +77,16 @@ namespace TransparentOverlay
 
 		private void onRun()
 		{
-			while (true)
+			Process[] processes = Process.GetProcessesByName("notepad");
+			Process process = processes.SingleOrDefault();
+			IntPtr ptr = process.MainWindowHandle;
+			Rect NotepadRect = new Rect();
+			while (process != default(Process) && !process.HasExited) //Check if process was found & still running
 			{
-				Thread.Sleep(50);
-				Process[] processes = Process.GetProcessesByName("notepad");
-				Process process = processes.SingleOrDefault();
-				if (process == default(Process)) //No Process found
-					break;
-				IntPtr ptr = process.MainWindowHandle;
-				Rect NotepadRect = new Rect();
+				//Get Size & Location of window
 				GetWindowRect(ptr, ref NotepadRect);
 				int h = NotepadRect.Bottom - NotepadRect.Top, w = NotepadRect.Right - NotepadRect.Left;
+
 				MethodInvoker mi = delegate () //Delegate so we can access the form elements
 				{
 					this.Location = new System.Drawing.Point(NotepadRect.Left, NotepadRect.Top);
@@ -98,6 +97,9 @@ namespace TransparentOverlay
 					//TODO: Somehow draw here shit on the window
 				};
 				this.Invoke(mi);
+
+				//Sleep
+				Thread.Sleep(50);
 			}
 
 			Application.Exit();
