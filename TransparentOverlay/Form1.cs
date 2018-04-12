@@ -8,7 +8,6 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace TransparentOverlay
@@ -59,6 +58,8 @@ namespace TransparentOverlay
 		}
 		#endregion
 
+		public bool running { get; private set; }
+
 		public Form1()
 		{
 			InitializeComponent();
@@ -71,6 +72,7 @@ namespace TransparentOverlay
 			//New onRun Thread
 			new Thread(() =>
 			{
+				running = true;
 				onRun();
 			}).Start();
 		}
@@ -84,7 +86,7 @@ namespace TransparentOverlay
 			var graphics = this.CreateGraphics();
 			Font font = new Font("Arial", 12);
 
-			while (process != default(Process) && !process.HasExited) //Check if process was found & still running
+			while (process != default(Process) && !process.HasExited && running) //Check if process was found & still running
 			{
 				//Get Size & Location of window
 				GetWindowRect(ptr, ref NotepadRect);
