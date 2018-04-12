@@ -81,25 +81,30 @@ namespace TransparentOverlay
 			Process process = processes.SingleOrDefault();
 			IntPtr ptr = process.MainWindowHandle;
 			Rect NotepadRect = new Rect();
+			var graphics = this.CreateGraphics();
+			Font font = new Font("Arial", 12);
+
 			while (process != default(Process) && !process.HasExited) //Check if process was found & still running
 			{
 				//Get Size & Location of window
 				GetWindowRect(ptr, ref NotepadRect);
 				int h = NotepadRect.Bottom - NotepadRect.Top, w = NotepadRect.Right - NotepadRect.Left;
 
+				graphics = this.CreateGraphics();
 				MethodInvoker mi = delegate () //Delegate so we can access the form elements
 				{
-					this.Location = new System.Drawing.Point(NotepadRect.Left, NotepadRect.Top);
-					this.Size = new System.Drawing.Size(w, h);
+					this.Location = new Point(NotepadRect.Left, NotepadRect.Top);
+					this.Size = new Size(w, h);
 					this.TopMost = true;
 					this.TransparencyKey = this.BackColor = Color.LightSlateGray;
-					//TODO: Fix the text shit
-					//TODO: Somehow draw here shit on the window
+					//Draw here shit on the window
+					graphics.DrawLine(Pens.Red, 0, 0, this.Size.Width, this.Size.Height);
+					graphics.DrawString("Test", font, Brushes.Black, new Point(this.Size.Width/2, this.Size.Height/2));
 				};
 				this.Invoke(mi);
 
 				//Sleep
-				Thread.Sleep(50);
+				Thread.Sleep(5);
 			}
 
 			Application.Exit();
